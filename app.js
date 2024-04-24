@@ -5,6 +5,9 @@ const methodOverride = require('method-override')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')
+const checkLoginState = require('./server/middleware/authMiddleware.js');
+// const ejsLint = require('ejs-lint');
+
 
 const app = express()
 const PORT = 5000 || process.env.PORT
@@ -29,6 +32,9 @@ app.use(session({
 }
 ))
 
+// Apply the checkLoginState middleware to routes requiring authentication
+app.use(checkLoginState);
+
 // public folder contains static files
 app.use(express.static('public'))
 
@@ -39,8 +45,8 @@ app.set('view engine', 'ejs')
 
 app.locals.isActiveRoute = isActiveRoute;
 
-app.use('/', require('./server/routes/main'))
-app.use('/', require('./server/routes/admin'))
+app.use('/', require('./server/routes/mainRoutes.js'))
+app.use('/', require('./server/routes/userRoutes.js'))
 
 app.listen(PORT, () => {
 	console.log(`App Listening on PORT: ${PORT}`)

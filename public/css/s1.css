@@ -320,6 +320,15 @@ img{
 .pagination:hover {
   color: var(--black);
 }
+/* Add indentation for nested comments */
+.comment {
+  margin-left: 0; /* Adjust as needed */
+}
+
+.comment.nested {
+  margin-left: 20px; /* Adjust the indentation level */
+}
+
 
 @media only screen and (min-width: 768px) {
   .header {

@@ -3,7 +3,7 @@
 	<a href="/add-post" class="button">+ Add New</a>
 </div>
 <ul class="admin-posts">
-	<% data.forEach(post => { %>
+	<% userPosts.forEach(post => { %>
 		<li>
 			<a href="/post/<%= post._id %>">
 				<%= post.title %> &nearr;

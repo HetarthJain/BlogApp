@@ -1,6 +1,8 @@
 <div class="author">
-	<h1 class="author__heading">Hi, Im Hetarth Jain</h1>
-	<p class="author__body">Economics and Policy</p>
+	<h1 class="author__heading">PenPalette</h1>
+	<p class="author__body">
+		A platform for one to pen down their thoughts and share their ideas with th world.
+	</p>
 </div>
 <!-- <img src="" alt="img" class="post-img" width="980" height="530"> -->
 <section class="articles">
@@ -11,6 +13,7 @@
 			<a href="/post/<%= post._id %>">
 				<span><%= post.title %></span>
 				<span class="article-list__date"><%= post.createdAt.toDateString() %></span>
+				<span class="post_author"><%= post.username %></span>
 			</a>
 		</li>
 		<% }) %>
