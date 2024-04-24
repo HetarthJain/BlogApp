@@ -69,7 +69,8 @@ const getPost = async (req,res)=>{
 			locals,
 			data,
 			currentRoute: `/post/${slug}`,
-			comments:allcomments
+			comments: allcomments,
+			currUser:req.user.username
 		})
 	}
 	catch (err) {

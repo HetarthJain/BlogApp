@@ -1,10 +1,11 @@
-const comments =  require('../models/comment.js')
+const comments =  require('../models/comment.js');
+const { findById } = require('../models/post.js');
 
 const commentPost = async (req, res) => {
     try {
         const username = req.user.username
         if (!username) {
-            res.status(500).json({ message: 'unAuthorized. Please Login First!' });
+            res.status(500).json({ message: 'UnAuthorized. Please Login First!' });
         }
         const text = req.body.comment
         const post_id = req.params.id
@@ -68,4 +69,35 @@ const commentReply = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 }
-module.exports = {commentPost,commentGet,commentReply}
+
+const editComment = async (req, res) => {
+    try {
+        const commentId = req.params.id;
+        const updatedCommentBody = req.body.updatedCommentBody; // Assuming you're sending the updated comment body in the request body
+        const updatedComment = await comments.findByIdAndUpdate(commentId, { body: updatedCommentBody }, { new: true });
+        const post_id = await comments.findById(commentId).post_id;
+        res.redirect(`/post/${post_id}`);
+        console.log({ message: 'Comment updated successfully', comment: updatedComment });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating comment', error: error.message });
+    }
+}
+
+const deleteComment = async (req, res) => {
+    try {
+        const commentId = req.params.id;
+        const post_id = await comments.findById(commentId).post_id;
+        // const Comment = await comments.findById(commentId)
+        // const parentid = Comment.parentComment
+        // const parent = await comments.findById(parentid)
+        // parent.childrenComment
+        await comments.findByIdAndDelete(commentId)
+        res.redirect(`/post/${post_id}`);
+        console.log({ message: 'Comment deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting comment', error: error.message });
+    }
+}
+
+
+module.exports = {commentPost,commentGet,commentReply,editComment,deleteComment}

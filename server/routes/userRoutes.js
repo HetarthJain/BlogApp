@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const { SignUpPage, SignUp, LoginPage, Login, Dashboard, getNewPost, getEditPost, postNewPost, updatePost, deletePost, Logout } = require('../controllers/userController.js')
 
-const {commentPost,commentGet,commentReply} = require('../controllers/commentController.js')
+const {commentPost,commentGet,commentReply,editComment,deleteComment} = require('../controllers/commentController.js')
 const checkLoginState = require('../middleware/authMiddleware.js')
 const jwt_secret = process.env.JWT_SECRET
 
@@ -58,7 +58,13 @@ router.post("/post/:id/comments", checkLoginState, commentPost)
 
 router.get("/post/:id/comments", commentGet)
 
-router.post("/comment/:commentId/reply",commentReply)
+router.post("/comment/:commentId/reply", commentReply)
+
+// Route to edit a comment
+router.put('/comment/:id/edit', editComment);
+
+// Route to delete a comment
+router.delete('/comment/:id/delete', deleteComment);
 
 // GET -> Admin Logout
 router.get('/logout', Logout)

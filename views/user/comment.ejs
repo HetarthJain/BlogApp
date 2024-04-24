@@ -26,6 +26,7 @@
               </div>
               <button type="submit" class="btn btn-primary">Reply</button>
             </form>
+            <%- include('./del-comment.ejs',{comment,currUser}) %>
             <% if (comment.childrenComment && comment.childrenComment.length> 0) { %>
               <% displayComments(comment.childrenComment, level + 1) %>
               <!-- Recursively call displayComments for nested comments -->
@@ -51,6 +52,7 @@
               </div>
               <button type="submit" class="btn btn-primary">Reply</button>
             </form>
+            <%- include('./del-comment.ejs',{comment,currUser}) %>
             <% if (comment.childrenComment && comment.childrenComment.length> 0) { %>
               <% displayComments(comment.childrenComment, level + 1) %>
               <!-- Recursively call displayComments for nested comments -->
