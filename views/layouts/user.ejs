@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<%- include('../partials/header_admin.ejs') %>
+		<%- include('../partials/header_admin.ejs',{user: locals.user}) %>
 		<main class="main">
 			<%- body %>
 		</main>

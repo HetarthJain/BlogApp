@@ -1,71 +1,100 @@
 <!-- comment.ejs -->
 
 <% const displayComments=(comments, level=0)=> { %>
-  <ul class="comments-list">
-    <% comments.forEach(comment=> { %> 
-      <% console.log("comment",comment); %>
-        <!-- <% console.log("children",comment.childrenComment); %>   -->
 
-        <% if (comment.parentComment===null && level===0) { %>
-          <% console.log("parent doesn't exists, level is 0: ") %>
-          <li class="comment" style="--indent: <%=level * 20%>px; margin-left: var(--indent)">
-            <!-- Indentation based on the level -->
-            <div class="comment-body">
-              <p>
-                <%= comment.body %>
-              </p>
-              <p>
-                Posted by: <%= comment.username %>
-              </p>
-            </div>
+<ul class="comments-list">
+
+  <% comments.forEach(comment=> { %>
+    <% if (comment.parentComment===null && level===0) { %> 
+      
+      <li
+        class="comment-container <%= comment.parentComment ? 'nested' : '' %>"
+        style="--indent: <%=level * 20%>px; margin-left: var(--indent)"
+      >
+        <!-- Indentation based on the level -->
+        <div>
+            <span class="comment-author"> Comment by: <%= comment.username %> </span>
+            <p class="comment-display"><%= comment.body %></p>
             <!-- Form for adding a new comment on this comment -->
-            <form action="/comment/<%= comment._id %>/reply" method="POST">
-              <div class="form-group">
-                <label for="reply">Reply to this comment:</label>
-                <textarea id="reply" name="reply" rows="2" class="form-control" required></textarea>
+            <div class="below-comment">
+              <form
+                class="reply-form"
+                action="/comment/<%= comment._id %>/reply"
+                method="POST"
+              >
+                <div>
+                  <span class="reply-h">Reply</span>
+                  <div class="form-group">
+                    <textarea
+                      name="reply"
+                      rows="1"
+                      class="form-control"
+                      placeholder="Add your reply here"
+                      required
+                    ></textarea>
+                    <button type="submit" class="btn btn-primary">Reply</button>
+                  </div>
+                </div>
+              </form>
+              <%- include('./del-comment.ejs',{comment,currUser}) %>
+            </div>
+        </div>
+
+        <% if (comment.childrenComment && comment.childrenComment.length> 0) { %> 
+          <% displayComments(comment.childrenComment, level + 1) %>
+        <% } %>
+
+      </li>
+
+    <% } else if (comment.parentComment!==null && level!==0) { %> 
+
+      <li
+        class="comment-container <%= comment.parentComment ? 'nested' : '' %>"
+        style="--indent: <%=level * 20%>px; margin-left: var(--indent)"
+      >
+        <!-- Indentation based on the level -->
+        <div>
+          <span class="comment-author"> Comment by: <%= comment.username %> </span>
+          <p class="comment-display"><%= comment.body %></p>
+          <!-- Form for adding a new comment on this comment -->
+          <div class="below-comment">
+            <form
+              class="reply-form"
+              action="/comment/<%= comment._id %>/reply"
+              method="POST"
+            >
+              <div>
+                <span class="reply-h">Reply</span>
+                <div class="form-group">
+                  <textarea
+                    name="reply"
+                    rows="1"
+                    class="form-control"
+                    placeholder="Add your reply here"
+                    required
+                  ></textarea>
+                  <button type="submit" class="btn btn-primary">Reply</button>
+                </div>
               </div>
-              <button type="submit" class="btn btn-primary">Reply</button>
             </form>
             <%- include('./del-comment.ejs',{comment,currUser}) %>
-            <% if (comment.childrenComment && comment.childrenComment.length> 0) { %>
-              <% displayComments(comment.childrenComment, level + 1) %>
-              <!-- Recursively call displayComments for nested comments -->
-            <% } %>
-          </li>
-        <% } else if (comment.parentComment!==null && level!==0) { %>
-          <% console.log("parent does exists, level > 0: ") %>
-          <li class="comment" style="--indent: <%=level * 20%>px; margin-left: var(--indent)">
-            <!-- Indentation based on the level -->
-            <div class="comment-body">
-              <p>
-                <%= comment.body %>
-              </p>
-              <p>
-                Posted by: <%= comment.username %>
-              </p>
-            </div>
-            <!-- Form for adding a new comment on this comment -->
-            <form action="/comment/<%= comment._id %>/reply" method="POST">
-              <div class="form-group">
-                <label for="reply">Reply to this comment:</label>
-                <textarea id="reply" name="reply" rows="2" class="form-control" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Reply</button>
-            </form>
-            <%- include('./del-comment.ejs',{comment,currUser}) %>
-            <% if (comment.childrenComment && comment.childrenComment.length> 0) { %>
-              <% displayComments(comment.childrenComment, level + 1) %>
-              <!-- Recursively call displayComments for nested comments -->
-            <% } %>
-          </li>
-        <% }%>
-    <%}) %>
-  </ul>
-<% } %>
-<% if (comments && comments.length> 0) { %>
-      <h2>Comments</h2>
-      <% displayComments(comments) %>
-      <!-- Call displayComments to generate nested comments -->
-<% } else { %>
-      <p>No comments yet.</p>
+          </div>
+        </div>
+
+        <% if (comment.childrenComment && comment.childrenComment.length> 0) { %> 
+          <% displayComments(comment.childrenComment, level + 1) %>
+        <% } %>
+
+      </li>
+
+      <% }%> 
+
+  <%}) %>
+
+</ul>
+
+<% } %> 
+<!-- --------------------------Call Display Func----------------------------------------- -->
+<% if (comments && comments.length> 0) { %> 
+  <% displayComments(comments) %>
 <% } %>

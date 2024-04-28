@@ -5,19 +5,19 @@ const Home = async (req, res) => {
 	try {
 		const locals = {
 			title: "Blog",
-			description:"simple blog crated using vanilla js, ejs, node, mongodb"
+			description: "simple blog crated using vanilla js, ejs, node, mongodb",
+			user:req.user||null
 		}
 
 		let perpage = 10
 		// default page will be 1
 		let page = req.query.page || 1
-		// { $sort: { <field1>: <sort order>, <field2>: <sort order> ... } }
 		const data = await Post.aggregate([{ $sort: { createdAt: -1 } }]).skip(perpage * page - perpage).limit(perpage).exec()
 		
 		const count = await Post.countDocuments({})
 		const nextPage = parseInt(page) + 1
-		const hasNextPage = nextPage <= Math.ceil(count/perpage)
-		
+		const hasNextPage = nextPage <= Math.ceil(count / perpage)
+
 		res.render('Home', {
 			locals,
 			data,
@@ -25,16 +25,16 @@ const Home = async (req, res) => {
 			nextPage: hasNextPage ? nextPage : null,
 			currentRoute: '/'
 		});
-
 	} catch (err) {
-		console.log(err)
+		console.log(err);
 	}
 }
 const websiteSearch = async (req, res) => {
 	try {
 		const locals = {
 			title: "Search",
-			description: "simple search"
+			description: "simple search",
+			user:req.user
 		}
 		const searchTerm = req.body.searchTerm
 		const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
@@ -63,14 +63,14 @@ const getPost = async (req,res)=>{
 		const locals = {
 			title: data.title,
 			description: "simple blog",
-			
+			user:req.user
 		}
 		res.render('post', {
 			locals,
 			data,
 			currentRoute: `/post/${slug}`,
 			comments: allcomments,
-			currUser:req.user.username
+			currUser:req.user
 		})
 	}
 	catch (err) {

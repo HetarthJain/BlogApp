@@ -6,22 +6,26 @@ const Post = require('../models/post');
 const jwt_secret = process.env.JWT_SECRET;
 
 const checkLoginState = async (req, res, next) => {
-    const token = req.cookies.token || req.session.token;
-    if (token) {
+
+    const token = req.cookies.token;
+    if (token === undefined) {
+        next();
+    } else if (token) {
         try {
             const decoded = jwt.verify(token, jwt_secret);
             req.userId = decoded.userId;
             const user = await User.findById(req.userId);
-            if (user) {
-				req.userPosts = await Post.find({ username: user.username })
-				req.user = user
-            }
+            req.userPosts = await Post.find({ username: { $eq: user.username } });
+            req.user = user.username;
+            
         } catch (error) {
             req.session.destroy();
             res.clearCookie('token');
         }
+        next();
+    } else {
+        next();
     }
-    next();
 };
 
 module.exports = checkLoginState;

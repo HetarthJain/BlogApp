@@ -1,16 +1,23 @@
 <header class="header">
-	<a href="/" class="header__logo">Admin</a>
+	<a href="/user/dashboard" class="header__logo"><%= user %>'s Admin</a>
 	<nav class="header__nav">
 		<ul>
 			<li>
-				<a href="/">Home</a>
+				<a href="/" class="<%= isActiveRoute('/',currentRoute)%>" >Home</a>
+			</li>
+			<% if(user===undefined){ %>
+			<li>
+				<a href="/login" class="<%= isActiveRoute('/login',currentRoute)%>" >Login</a>
 			</li>
 			<li>
-				<a href="/login">Login</a>
+				<a href="/register" class="<%= isActiveRoute('/register',currentRoute)%>" >Sign Up</a>
 			</li>
+			<% } %>
+			<% if (user) { %>
 			<li>
-				<a href="/register">Sign Up</a>
+				<a href="/user/dashboard" class="<%= isActiveRoute('/user/dashboard',currentRoute)%>" >Dashboard</a>
 			</li>
+			<% } %>
 		</ul>
 	</nav>
 	<div class="header__button">

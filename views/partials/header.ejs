@@ -5,12 +5,15 @@
 			<li>
 				<a href="/" class="<%= isActiveRoute('/',currentRoute) %>">Home</a>
 			</li>
-			<li>
-				<a href="/login" class="<%= isActiveRoute('/login',currentRoute) %>">Login</a>
-			</li>
-			<li>
-				<a href="/user/dashboard" class="<%= isActiveRoute('/user/dashboard',currentRoute) %>">Dashboard</a>
-			</li>
+			<% if(user){ %>
+				<li>
+					<a href="/user/dashboard" class="<%= isActiveRoute('/user/dashboard',currentRoute) %>">Dashboard</a>
+				</li>
+			<% } else { %>
+				<li>
+					<a href="/login" class="<%= isActiveRoute('/login',currentRoute) %>">Login</a>
+				</li>
+			<% } %>
 		</ul>
 	</nav>
 

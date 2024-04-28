@@ -12,6 +12,7 @@
             └── img-noise-361x370.png
         └── 📁js
             └── script.js
+    └── README.md
     └── 📁server
         └── 📁config
             └── db.js
@@ -21,6 +22,8 @@
             └── userController.js
         └── 📁helpers
             └── routeHelper.js
+        └── 📁middleware
+            └── authMiddleware.js
         └── 📁models
             └── comment.js
             └── post.js
@@ -43,7 +46,10 @@
         └── search.ejs
         └── 📁user
             └── add-posts.ejs
+            └── comment.ejs
             └── dashboard.ejs
+            └── del-comment.ejs
+            └── edit-comment.ejs
             └── edit-post.ejs
             └── index.ejs
             └── login.ejs

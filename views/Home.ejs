@@ -12,8 +12,7 @@
 		<li>
 			<a href="/post/<%= post._id %>">
 				<span><%= post.title %></span>
-				<span class="article-list__date"><%= post.createdAt.toDateString() %></span>
-				<span class="post_author"><%= post.username %></span>
+				<span class="article-list__date"><%= post.username %></span>
 			</a>
 		</li>
 		<% }) %>
