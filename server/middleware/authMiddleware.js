@@ -19,7 +19,6 @@ const checkLoginState = async (req, res, next) => {
             req.user = user.username;
             
         } catch (error) {
-            req.session.destroy();
             res.clearCookie('token');
         }
         next();
