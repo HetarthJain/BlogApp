@@ -31,7 +31,7 @@ const SignUp = async (req, res) => {
 		try {
 			const user = await User.create({ username, password: hashed })
 			// res.status(201).json({ message: 'New User created', user })
-			res.redirect('/user')
+			res.redirect('/login')
 		} catch (error) {
 			if (error.code === 11000) {
 				res.render("user/signup", { locals, layout: adminLayout ,errormessage:"User already present",currentRoute:"/register"})

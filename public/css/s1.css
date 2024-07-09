@@ -423,12 +423,15 @@ img{
   padding: 15px;
   cursor: pointer;
 }
-
+.pagi{
+  display: flex;
+  justify-content: space-between;
+}
 .pagination {
   font-size: 1.3rem;
   color: var(--gray);
   text-decoration: none;
-  margin-top: 40px;
+  /* margin-top: 40px; */
   display: inline-block;
 }
 .pagination:hover {

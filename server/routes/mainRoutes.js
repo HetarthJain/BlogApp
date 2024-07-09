@@ -4,11 +4,7 @@ const router = express.Router()
 const { Home, getPost, websiteSearch } = require('../controllers/mainController')
 const checkLoginState = require('../middleware/authMiddleware.js')
 
-// router.get('/', (req, res) => {
-// 	if(req.user){ isLoggedIn = true }
-// 		else{ isLoggedIn = false }
-// 	res.render('layouts/main', {isLoggedIn});
-// });
+
 // GET -> Render Home.ejs Page
 router.get('/',checkLoginState, Home)
 // GET -> Render post.ejs Page

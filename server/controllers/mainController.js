@@ -9,20 +9,22 @@ const Home = async (req, res) => {
 			user:req.user||null
 		}
 
-		let perpage = 10
+		let perpage = 1
 		// default page will be 1
 		let page = req.query.page || 1
 		const data = await Post.aggregate([{ $sort: { createdAt: -1 } }]).skip(perpage * page - perpage).limit(perpage).exec()
-		
 		const count = await Post.countDocuments({})
 		const nextPage = parseInt(page) + 1
 		const hasNextPage = nextPage <= Math.ceil(count / perpage)
+		const prevPage = parseInt(page) - 1
+		const hasPrevPage = prevPage >= 1
 
 		res.render('Home', {
 			locals,
 			data,
 			current: page,
 			nextPage: hasNextPage ? nextPage : null,
+			prevPage: hasPrevPage ? prevPage : null,
 			currentRoute: '/'
 		});
 	} catch (err) {
