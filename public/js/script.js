@@ -1,18 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
-	console.log("dom loaded")
 	const allButtons = document.querySelectorAll('.searchBtn')
 	const searchBar = document.querySelector('.searchBar')
 	const searchInput = document.getElementById('searchInput')
 	const searchClose = document.getElementById('searchClose')
-	console.log(searchBar)
-	console.log("searchclose is ",searchClose)
 
 	for (var i = 0; i < allButtons.length; i++) {
-		console.log("all buttons is ",allButtons[i])
 		allButtons[i].addEventListener('click', function(){
 			searchBar.style.visiblity = 'visible'
 			searchBar.classList.add('open')
-			console.log(this)
 			this.setAttribute('aria-expanded', 'true')
 			searchInput.focus()
 		})
@@ -25,3 +20,14 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	}
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+	const replyHeaders = document.querySelectorAll('.reply-h');
+  
+	replyHeaders.forEach(replyHeader => {
+	  replyHeader.addEventListener('click', () => {
+		const formGroup = replyHeader.nextElementSibling; // Get the next sibling element with classname "form-group"
+		formGroup.style.display = formGroup.style.display === 'none' ? 'block' : 'none'; // Toggle the display property
+	  });
+	});
+  });

@@ -1,16 +1,19 @@
 <header class="header">
-	<a href="/" class="header__logo">My-Blog</a>
+	<a href="/" class="header__logo">PenPalette</a>
 	<nav class="header__nav">
 		<ul>
 			<li>
 				<a href="/" class="<%= isActiveRoute('/',currentRoute) %>">Home</a>
 			</li>
-			<li>
-				<a href="/about" class="<%= isActiveRoute('/about',currentRoute) %>">About</a>
-			</li>
-			<li>
-				<a href="/contact" class="<%= isActiveRoute('/contact',currentRoute) %>">Contact</a>
-			</li>
+			<% if(user){ %>
+				<li>
+					<a href="/user/dashboard" class="<%= isActiveRoute('/user/dashboard',currentRoute) %>">Dashboard</a>
+				</li>
+			<% } else { %>
+				<li>
+					<a href="/login" class="<%= isActiveRoute('/login',currentRoute) %>">Login</a>
+				</li>
+			<% } %>
 		</ul>
 	</nav>
 

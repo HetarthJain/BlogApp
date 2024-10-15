@@ -1,0 +1,9 @@
+<!-- edit-comment.ejs -->
+
+<form action="/comment/<%= comment._id %>/edit" method="POST">
+    <div class="form-group">
+        <label for="updatedCommentBody">Updated Comment:</label>
+        <textarea id="updatedCommentBody" name="updatedCommentBody" rows="4" class="form-control" required><%= comment.body %></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>

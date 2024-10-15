@@ -1,2 +1,25 @@
 <h1><%= data.title %></h1>
+<div class="article-info">
+	<span class="article-author"><%= data.username %></span>
+	<span class="article-date"><%= data.updatedAt.toDateString() %></span>
+</div>
 <article class="article"><%= data.body %></article>
+
+<h3 class="comment-heading"> Comments </h3>
+<div class="all-comments-container">
+<!-- Form for adding a new comment -->
+<form action="/post/<%= data._id %>/comments" method="POST">
+	<div class="comment-form">
+	  <!-- <label for="comment">Add your comment:</label> -->
+	  <textarea id="comment-input" name="comment" rows="1" class="form-control" placeholder="Add your commment here" required></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<%- include('./user/comment.ejs',{ level: 0 , currUser}) %>
+</div>
+<!-- <form action="/:post_id/comment" method="POST">
+	
+	<label for="username">Username</label>
+	<input type="text" placeholder="Enter comment" name="comment">
+</form> -->
